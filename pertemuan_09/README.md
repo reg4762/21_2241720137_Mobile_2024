@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/da0a4f14-884e-4afa-9457-9c0e273987be
 # Praktikum 2: Membuat photo filter carousel
 Output:
 
-<video controls src="img/filter.mp4" title="Title"></video>
+https://github.com/user-attachments/assets/f5f748cf-6194-4ffc-9660-b2e144cc0714
 
 # TUGAS PRAKTIKUM
 
@@ -26,7 +26,7 @@ Membuat project baru bernama "filter_camera"
 
 Output:
 
-<video controls src="img/filter_camera.mp4" title="Title"></video>
+https://github.com/user-attachments/assets/9cf5c924-60b0-4b30-9502-e1cd387ada32
 
 ## 3. Jelaskan maksud void async pada praktikum 1?
 ### Jawaban:
