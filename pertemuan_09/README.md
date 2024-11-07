@@ -8,7 +8,7 @@
 # Praktikum 1: Mengambil Foto dengan Kamera di Flutter
 Output:
 
-<video controls src="img/camera_flutter.mp4" title="Title"></video>
+https://github.com/user-attachments/assets/da0a4f14-884e-4afa-9457-9c0e273987be
 
 # Praktikum 2: Membuat photo filter carousel
 Output:
