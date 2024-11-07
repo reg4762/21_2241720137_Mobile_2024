@@ -8,12 +8,12 @@
 # Praktikum 1: Mengambil Foto dengan Kamera di Flutter
 Output:
 
-![Output](./img/camera_flutter.mp4)
+<video controls src="img/camera_flutter.mp4" title="Title"></video>
 
 # Praktikum 2: Membuat photo filter carousel
 Output:
 
-![Output](./img/filter.mp4)
+<video controls src="img/filter.mp4" title="Title"></video>
 
 # TUGAS PRAKTIKUM
 
@@ -26,7 +26,7 @@ Membuat project baru bernama "filter_camera"
 
 Output:
 
-![Output](./img/filter_camera.mp4)
+<video controls src="img/filter_camera.mp4" title="Title"></video>
 
 ## 3. Jelaskan maksud void async pada praktikum 1?
 ### Jawaban:
