@@ -34,5 +34,11 @@ Output:
 
 ## 5. Apa kegunaan method pada Langkah 11 dan 13 dalam lifecyle state ?
 
+### Jawaban:
+
+initState() (Langkah 11): Method ini dipanggil sekali ketika widget pertama kali dibuat, dan digunakan untuk inisialisasi. Di sini, ScrollController dibuat dan listener ditambahkan agar aplikasi bisa mendeteksi saat pengguna menggulir layar. Dalam contoh ini, listener tersebut akan meminta fokus (dengan FocusScope.of(context).requestFocus(FocusNode())) setiap kali pengguna menggulir, yang berguna untuk menutup keyboard ketika layar digulir. Hal ini membantu menjaga tampilan tetap rapi dan mengurangi gangguan visual.
+
+dispose() (Langkah 13): Method ini dipanggil saat widget sudah tidak digunakan dan akan dihapus dari widget tree. Dalam kasus ini, dispose() berfungsi untuk membersihkan ScrollController yang tidak lagi diperlukan dengan memanggil scrollController.dispose(). Ini penting untuk mencegah kebocoran memori (memory leak), karena ScrollController yang tidak dibersihkan dapat tetap tersimpan di memori walaupun widget sudah dihapus.
+
 ## 6. Kumpulkan laporan praktikum Anda berupa link commit atau repository GitHub ke dosen yang telah disepakati !
 
