@@ -40,32 +40,38 @@ class _PlanScreenState extends State<PlanScreen> {
     );
   }
 
-  Widget _buildTaskTile(Task task, int index, BuildContext context) {
-    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+Widget _buildTaskTile(Task task, int index, BuildContext context) {
+  ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
 
-    return ListTile(
-      leading: Checkbox(
-          value: task.complete,
-          onChanged: (selected) {
-            Plan currentPlan = plan;
-            int planIndex = planNotifier.value
-                .indexWhere((p) => p.name == currentPlan.name);
-            planNotifier.value = List<Plan>.from(planNotifier.value)
-              ..[planIndex] = Plan(
-                name: currentPlan.name,
-                tasks: List<Task>.from(currentPlan.tasks)
-                  ..[index] = Task(
-                    description: task.description,
-                    complete: selected ?? false,
-                  ),
-              );
-          }),
-      title: TextFormField(
-        initialValue: task.description,
-        onChanged: (text) {
-          Plan currentPlan = plan;
-          int planIndex =
-              planNotifier.value.indexWhere((p) => p.name == currentPlan.name);
+  return ListTile(
+    leading: Checkbox(
+      value: task.complete,
+      onChanged: (selected) {
+        Plan currentPlan = plan;
+        int planIndex = planNotifier.value
+            .indexWhere((p) => p.name == currentPlan.name);
+
+        if (currentPlan.tasks.isNotEmpty && index < currentPlan.tasks.length) {
+          planNotifier.value = List<Plan>.from(planNotifier.value)
+            ..[planIndex] = Plan(
+              name: currentPlan.name,
+              tasks: List<Task>.from(currentPlan.tasks)
+                ..[index] = Task(
+                  description: task.description,
+                  complete: selected ?? false,
+                ),
+            );
+        }
+      },
+    ),
+    title: TextFormField(
+      initialValue: task.description,
+      onChanged: (text) {
+        Plan currentPlan = plan;
+        int planIndex = planNotifier.value
+            .indexWhere((p) => p.name == currentPlan.name);
+
+        if (currentPlan.tasks.isNotEmpty && index < currentPlan.tasks.length) {
           planNotifier.value = List<Plan>.from(planNotifier.value)
             ..[planIndex] = Plan(
               name: currentPlan.name,
@@ -75,17 +81,19 @@ class _PlanScreenState extends State<PlanScreen> {
                   complete: task.complete,
                 ),
             );
-        },
-      ),
-    );
-  }
+        }
+      },
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
     ValueNotifier<List<Plan>> plansNotifier = PlanProvider.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(_plan.name)),
+      appBar: AppBar(title: Text(plan.name)),
       body: ValueListenableBuilder<List<Plan>>(
         valueListenable: plansNotifier,
         builder: (context, plans, child) {
@@ -106,6 +114,7 @@ class _PlanScreenState extends State<PlanScreen> {
 
   Widget _buildAddTaskButton(BuildContext context) {
     ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+
     return FloatingActionButton(
       child: const Icon(Icons.add),
       onPressed: () {
@@ -113,16 +122,14 @@ class _PlanScreenState extends State<PlanScreen> {
         int planIndex =
             planNotifier.value.indexWhere((p) => p.name == currentPlan.name);
         List<Task> updatedTasks = List<Task>.from(currentPlan.tasks)
-          ..add(const Task());
+          ..add(const Task()); // Add a new task
+
+        // Update the plan in the planNotifier
         planNotifier.value = List<Plan>.from(planNotifier.value)
           ..[planIndex] = Plan(
             name: currentPlan.name,
             tasks: updatedTasks,
           );
-        plan = Plan(
-          name: currentPlan.name,
-          tasks: updatedTasks,
-        );
       },
     );
   }
