@@ -42,3 +42,33 @@ dispose() (Langkah 13): Method ini dipanggil saat widget sudah tidak digunakan d
 
 ## 6. Kumpulkan laporan praktikum Anda berupa link commit atau repository GitHub ke dosen yang telah disepakati !
 
+# Tugas Praktikum 2: InheritedWidget
+
+## 1. Selesaikan langkah-langkah praktikum tersebut, lalu dokumentasikan berupa GIF hasil akhir praktikum beserta penjelasannya di file README.md! Jika Anda menemukan ada yang error atau tidak berjalan dengan baik, silakan diperbaiki sesuai dengan tujuan aplikasi tersebut dibuat.
+
+## 2. Jelaskan mana yang dimaksud InheritedWidget pada langkah 1 tersebut! Mengapa yang digunakan InheritedNotifier?
+
+### Jawaban:
+
+Pada kode di atas, PlanProvider adalah sebuah InheritedNotifier, yaitu jenis khusus dari InheritedWidget yang digabungkan dengan ChangeNotifier. InheritedWidget digunakan untuk membagikan data secara efisien di seluruh widget tree tanpa harus melewatkan data tersebut secara eksplisit melalui setiap widget. PlanProvider memungkinkan data ValueNotifier<Plan> yang dibungkus di dalamnya dapat diakses oleh widget lain dalam tree, menggunakan fungsi of. Fungsi of ini memanfaatkan dependOnInheritedWidgetOfExactType untuk menemukan PlanProvider dalam widget tree, sehingga widget yang berada dalam cakupan PlanProvider dapat dengan mudah mengakses dan mendengarkan perubahan pada data Plan.
+
+Penggunaan InheritedNotifier sangat tepat dalam kasus ini karena mendukung pembaruan data yang efisien. Ketika data Plan berubah, InheritedNotifier akan secara otomatis memperbarui hanya widget yang menggunakan data tersebut, tanpa harus membangun ulang seluruh widget tree. Ini meningkatkan performa aplikasi, karena pembaruan hanya terjadi pada bagian yang relevan. Selain itu, dengan adanya ValueNotifier<Plan> yang langsung diteruskan melalui InheritedNotifier, data tetap sinkron di seluruh widget yang membutuhkannya, menjadikan pengelolaan status aplikasi menjadi lebih responsif dan sederhana.
+
+## 3. Jelaskan maksud dari method di langkah 3 pada praktikum tersebut! Mengapa dilakukan demikian?
+
+### Jawaban:
+
+Method get completedCount dan get completenessMessage digunakan untuk menghitung jumlah tugas yang telah selesai dan menampilkan pesan kemajuan tugas secara dinamis. completedCount menghitung jumlah tugas yang selesai dengan memfilter daftar tasks menggunakan where untuk mencari tugas yang memiliki nilai complete bernilai true, lalu menghitung hasilnya menggunakan length. Sementara itu, completenessMessage membentuk pesan kemajuan dalam format "$completedCount out of ${tasks.length} tasks", menampilkan jumlah tugas yang telah diselesaikan dari total seluruh tugas. Pendekatan ini memungkinkan tampilan progres yang otomatis terupdate ketika data tugas berubah, memudahkan pengguna untuk memantau kemajuan tanpa memerlukan penghitungan atau penyimpanan tambahan, sehingga mendukung desain aplikasi yang lebih responsif dan terstruktur.
+
+## 4. Lakukan capture hasil dari Langkah 9 berupa GIF, kemudian jelaskan apa yang telah Anda buat!
+
+### Jawaban:
+
+Output:
+
+![Output](./img/2.gif)
+
+## 5. Kumpulkan laporan praktikum Anda berupa link commit atau repository GitHub ke dosen yang telah disepakati !
+
+# Praktikum 3: Membuat State di Multiple Screens
+
