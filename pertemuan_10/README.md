@@ -76,9 +76,37 @@ Output:
 
 ## 2. Berdasarkan Praktikum 3 yang telah Anda lakukan, jelaskan maksud dari gambar diagram berikut ini!
 
+### Jawaban:
+
+Diagram terbagi menjadi 2 bagian yang dihubungkan dengan "Navigator Push":
+
+1. Bagian Kiri (Biru) - Layar Pertama:
+- Root widget adalah MaterialApp
+- Menggunakan PlanProvider sebagai state management
+- PlanCreatorScreen sebagai halaman utama
+- Memiliki struktur Column yang berisi:
+  - TextField untuk input
+  - Widget Expanded yang memuat ListView
+
+2. Bagian Kanan (Hijau) - Layar Kedua:
+- Root widget tetap MaterialApp 
+- Menggunakan PlanScreen
+- Menggunakan Scaffold sebagai basic layout
+- Memiliki Column yang berisi:
+  - Widget Expanded dengan ListView
+  - SafeArea yang memuat Text
+
+"Navigator Push" di tengah menunjukkan bahwa ada navigasi dari layar pertama ke layar kedua. Ini adalah implementasi dari fitur navigasi di Flutter dimana pengguna bisa berpindah dari layar pembuat rencana (PlanCreatorScreen) ke layar tampilan rencana (PlanScreen).
+
+Diagram ini menggambarkan arsitektur aplikasi Master Plan yang dibuat pada Praktikum 3, dimana aplikasi memiliki dua layar utama - satu untuk membuat rencana dan satu lagi untuk menampilkan rencana, dengan kemampuan navigasi antara keduanya menggunakan Navigator.Push.
+
+Struktur widget yang ditunjukkan mencerminkan best practice dalam Flutter development dengan penggunaan state management (PlanProvider) dan widget-widget layout dasar seperti Column, ListView, dan SafeArea untuk membangun UI yang terstruktur dan maintainable.
+
 ## 3. Lakukan capture hasil dari Langkah 14 berupa GIF, kemudian jelaskan apa yang telah Anda buat!
 
 ### Jawaban:
+
+Aplikasi ini adalah manajer rencana tugas yang memungkinkan pengguna untuk membuat dan mengelola rencana yang terdiri dari daftar tugas. Setiap rencana dapat memiliki beberapa tugas, yang dapat ditandai sebagai selesai atau belum selesai menggunakan checkbox. Pengguna dapat menambahkan tugas baru ke dalam rencana yang ada, serta mengedit deskripsi tugas yang sudah ada. 
 
 Output:
 
