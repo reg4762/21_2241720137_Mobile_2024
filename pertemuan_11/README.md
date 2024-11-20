@@ -659,3 +659,21 @@ Output:
 - Seperti yang Anda lihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
 
 ## Langkah 5: Tambah handling error
+
+```
+else if (snapshot.connectionState == ConnectionState.done) {
+  if (snapshot.hasError) {
+     return Text('Something terrible happened!');
+  }
+  return Text(snapshot.data.toString());
+}
+```
+
+**Soal 14**
+- Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
+
+Jawaban:
+
+Langkah terbaru menambahkan fitur untuk menangani error dan memberi tahu pengguna jika sesuatu salah terjadi (misalnya, kesalahan saat mengambil lokasi). Tanpa penanganan error, aplikasi hanya akan menunggu atau menampilkan hasil kosong jika terjadi error. Dengan penanganan error, aplikasi memberikan feedback yang jelas kepada pengguna tentang masalah yang terjadi.
+
+
