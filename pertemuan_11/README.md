@@ -367,6 +367,37 @@ Output:
 
 ![Output](./img/4.gif)
 
+## Langkah 4: Ganti variabel futureGroup
 
+```
+void returnFG() {
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+    futures.then((List<int> value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
+```
+
+**Soal 8**
+
+- Jelaskan maksud perbedaan kode langkah 1 dan 4!
+
+Jawaban:
+
+Kode 1 - Menggunakan FutureGroup
+Pada kode ini, objek FutureGroup<int> digunakan untuk mengelompokkan beberapa operasi asynchronous, dalam hal ini returnOneAsync(), returnTwoAsync(), dan returnThreeAsync(). Masing-masing Future ditambahkan ke futureGroup menggunakan metode add(). Setelah semua operasi ditambahkan, futureGroup.close() dipanggil untuk menandakan bahwa tidak ada Future tambahan yang akan ditambahkan ke grup. Kemudian, futureGroup.future digunakan untuk mendapatkan hasil setelah semua operasi selesai, dan ketika selesai, hasilnya dikumpulkan dalam sebuah list (List<int>). Proses pengumpulan hasil dilakukan dengan cara menjumlahkan nilai dalam list tersebut dan mengupdate UI melalui setState().
+
+Kode 4 - Menggunakan Future.wait
+Pada kode ini, Future.wait() digunakan untuk menjalankan beberapa Future secara paralel dan menunggu semuanya selesai sebelum melanjutkan. Fungsi Future.wait() menerima sebuah list yang berisi beberapa Future (dalam hal ini hasil dari returnOneAsync(), returnTwoAsync(), dan returnThreeAsync()) dan mengembalikan sebuah Future<List<int>> yang berisi hasil dari semua operasi tersebut dalam urutan yang sama. Tidak ada kebutuhan untuk menambahkan Future satu per satu seperti di kode pertama, dan setelah semua operasi selesai, hasilnya langsung tersedia sebagai list yang bisa langsung diproses.
 
 
