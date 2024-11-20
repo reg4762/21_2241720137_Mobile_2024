@@ -324,3 +324,49 @@ Pada Langkah 5, kode ditambahkan dengan penanganan kesalahan menggunakan blok tr
 Output:
 
 ![Output](./img/3_2.gif)
+
+# Praktikum 4: Memanggil Future secara paralel
+
+## Langkah 1: Buka file main.dart
+
+```
+void returnFG() {
+    FutureGroup<int> futureGroup = FutureGroup<int>();
+    futureGroup.add(returnOneAsync());
+    futureGroup.add(returnTwoAsync());
+    futureGroup.add(returnThreeAsync());
+    futureGroup.close();
+    futureGroup.future.then((List<int> value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
+```
+
+## Langkah 2: Edit onPressed()
+
+```
+onPressed: () {
+    returnFG();
+},
+```
+
+## Langkah 3: Run
+Anda akan melihat hasilnya dalam 3 detik berupa angka 6 lebih cepat dibandingkan praktikum sebelumnya menunggu sampai 9 detik.
+
+**Soal 7**
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 7".
+
+Output:
+
+![Output](./img/4.gif)
+
+
+
+
