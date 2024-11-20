@@ -20,7 +20,9 @@ Output:
 ![Output](./img/1.2.png)
 
 ## Langkah 3: Buka file main.dart
-`Soal 1: Tambahkan nama panggilan Anda pada title app sebagai identitas hasil pekerjaan Anda.`
+**Soal 1** 
+
+Tambahkan nama panggilan Anda pada title app sebagai identitas hasil pekerjaan Anda.
 
 ~~~
 import 'dart:async';
@@ -99,7 +101,30 @@ class _FuturePageState extends State<FuturePage> {
 }
 ~~~
 
+## Langkah 4: Tambah method getData()
 
+~~~
+  Future<Response> getData() async {
+    const authority = 'www.gooleapis.com';
+    const path = '/books/v1/volumes/junbDwAAQBAJ';
+    Uri url = Uri.https(authority, path);
+    return http.get(url); 
+  }
+~~~
+
+**Soal 2**
+
+Carilah judul buku favorit Anda di Google Books, lalu ganti ID buku pada variabel path di kode tersebut. (Laut Bercerita)
+
+Output:
+
+![Output](./img/1.3.png)
+
+Kemudian cobalah akses di browser URI tersebut dengan lengkap seperti ini. Jika menampilkan data JSON, maka Anda telah berhasil. Lakukan capture milik Anda dan tulis di README pada laporan praktikum. Lalu lakukan commit dengan pesan "W11: Soal 2".`
+
+Output:
+
+![Output](./img/1.4.png)
 
 
 
