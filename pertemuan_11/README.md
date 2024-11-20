@@ -163,3 +163,74 @@ Kode tersebut menggunakan `substring` untuk membatasi jumlah karakter dari respo
 Output:
 
 ![Output](./img/1.gif)
+
+# Praktikum 2: Menggunakan await/async untuk menghindari callbacks
+
+## Langkah 1: Buka file main.dart
+
+```
+Future<int> returnOneAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 1;
+}
+
+Future<int> returnTwoAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 2;
+}
+
+Future<int> returnThreeAsync() async {
+  await Future.delayed(const Duration(seconds: 3));
+  return 3;
+}
+```
+
+## Langkah 2: Tambah method count()
+
+```
+  Future count() async {
+    int total = 0;
+    total = await returnOneAsync();
+    total += await returnTwoAsync();
+    total += await returnThreeAsync();
+    setState(() {
+      result = total.toString();
+    });
+  }
+```
+
+## Langkah 3: Panggil count()
+
+```
+ElevatedButton(
+    child: const Text('GO!'),
+    onPressed: () {
+        // setState(() {});
+        // getData().then((value) {
+        //   result = value.body.toString().substring(0, 450);
+        //   setState(() {});
+        // }).catchError((_) {
+        //   result = 'An error occurred';
+        //   setState(() {});
+        // });
+        count();
+    },
+),
+```
+
+## Langkah 4: Run
+
+**Soal 4**
+- Jelaskan maksud kode langkah 1 dan 2 tersebut!
+
+Jawaban:
+
+Langkah 1 mendefinisikan tiga fungsi asynchronous: returnOneAsync, returnTwoAsync, dan returnThreeAsync. Masing-masing fungsi ini mensimulasikan tugas yang memerlukan waktu pemrosesan dengan menunggu selama 3 detik menggunakan Future.delayed. Setelah waktu tunggu selesai, setiap fungsi mengembalikan nilai 1, 2, atau 3. Fungsi-fungsi ini biasanya digunakan untuk mensimulasikan operasi seperti pengambilan data dari server atau pemrosesan yang membutuhkan waktu tertentu.
+
+Langkah 2 memperkenalkan fungsi asynchronous count() yang menghitung total nilai dari ketiga fungsi sebelumnya secara berurutan. Fungsi ini menggunakan await untuk menunggu setiap fungsi selesai sebelum melanjutkan ke langkah berikutnya. Total nilai dari setiap fungsi ditambahkan ke variabel total. Setelah semua proses selesai (dalam total waktu 9 detik), setState() dipanggil untuk memperbarui UI dengan hasil perhitungan dalam variabel result. Proses ini memastikan bahwa hasil ditampilkan secara akurat di layar setelah semua tugas selesai dijalankan.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 4".
+
+Output:
+
+![Output](./img/2.gif)
