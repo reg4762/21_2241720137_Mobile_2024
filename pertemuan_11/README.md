@@ -549,3 +549,48 @@ class _LocationScreenState extends State<LocationScreen> {
 
 **Soal 11**
 - Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda.
+
+## Langkah 6: Edit main.dart
+Panggil screen baru tersebut di file main Anda seperti berikut.
+
+```
+home: LocationScreen(),
+```
+
+## Langkah 7: Run
+
+Run project Anda di device atau emulator (bukan browser), maka akan tampil seperti berikut ini.
+
+Output:
+
+![Output](./img/6.5.png)
+
+## Langkah 8: Tambahkan animasi loading
+
+```
+  @override
+  Widget build(BuildContext context) {
+    final myWidget = myPosition == ''
+      ? const CircularProgressIndicator()
+      : Text(myPosition);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Current Location Regita')),
+      body: Center(child: myWidget),
+    );
+  }
+```
+
+**Soal 12**
+- Jika Anda tidak melihat animasi loading tampil, kemungkinan itu berjalan sangat cepat. Tambahkan delay pada method getPosition() dengan kode await Future.delayed(const Duration(seconds: 3));
+- Apakah Anda mendapatkan koordinat GPS ketika run di browser? Mengapa demikian?
+
+Jawaban:
+
+Tidak, tidak bisa mendapatkan koordinat GPS ketika menjalankan aplikasi Flutter di browser karena browser tidak memiliki akses langsung ke sensor GPS perangkat seperti halnya aplikasi native di perangkat Android atau iOS.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 12".
+
+Output:
+
+![Output](./img/6.gif)

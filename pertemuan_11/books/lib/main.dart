@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:async/async.dart';
+import 'package:books/geolocation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const FuturePage(),
+      home: LocationScreen(),
     );
   }
 }
@@ -88,7 +89,7 @@ class _FuturePageState extends State<FuturePage> {
               //     result = onError.toString();
               //   });
               // }).whenComplete(() => print('Complete'));
-              
+
               handleError(); // Memanggil method handleError() ketika tombol ditekan
             },
           ),
