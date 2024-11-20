@@ -723,9 +723,142 @@ class _NavigationFirstState extends State<NavigationFirst> {
 - Silakan ganti dengan warna tema favorit Anda.
 
 ## Langkah 3: Tambah method di class _NavigationFirstState
+```
+Future _navigateAndGetColor(BuildContext context) async {
+   color = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const NavigationSecond()),) ?? Colors.blue;
+   setState(() {});
+   });
+}
+```
 ## Langkah 4: Buat file baru navigation_second.dart
+
+Output:
+
+![Output](./img/8.2.png)
+
 ## Langkah 5: Buat class NavigationSecond dengan StatefulWidget
+```
+import 'package:flutter/material.dart';
+
+class NavigationSecond extends StatefulWidget {
+  const NavigationSecond({super.key});
+
+  @override
+  State<NavigationSecond> createState() => _NavigationSecondState();
+}
+
+class _NavigationSecondState extends State<NavigationSecond> {
+  @override
+  Widget build(BuildContext context) {
+    Color color;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigation Second Screen Regita'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              child: const Text('Red'),
+              onPressed: () {
+                color = Colors.red.shade700;
+                Navigator.pop(context, color);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Green'),
+              onPressed: () {
+                color = Colors.green.shade700;
+                Navigator.pop(context, color);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Blue'),
+              onPressed: () {
+                color = Colors.blue.shade700;
+                Navigator.pop(context, color);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
 ## Langkah 6: Edit main.dart
-## Langkah 8: Run
-## 
+```
+  home: NavigationFirst(),
+```
+
+## Langkah 7: Run
+
+**Soal 16**
+- Cobalah klik setiap button, apa yang terjadi ?
+
+Output:
+
+![Output](./img/9v.gif)
+
+- Gantilah 3 warna pada langkah 5 dengan warna favorit Anda!
+
+```
+import 'package:flutter/material.dart';
+
+class NavigationSecond extends StatefulWidget {
+  const NavigationSecond({super.key});
+
+  @override
+  State<NavigationSecond> createState() => _NavigationSecondState();
+}
+
+class _NavigationSecondState extends State<NavigationSecond> {
+  @override
+  Widget build(BuildContext context) {
+    Color color;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigation Second Screen Regita'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              child: const Text('Yellow'),
+              onPressed: () {
+                color = Colors.yellow.shade700;
+                Navigator.pop(context, color);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Pink'),
+              onPressed: () {
+                color = const Color.fromARGB(255, 219, 108, 164);
+                Navigator.pop(context, color);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Purple'),
+              onPressed: () {
+                color = const Color.fromARGB(255, 167, 6, 199);
+                Navigator.pop(context, color);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+Output:
+
+![Output](./img/9vv.gif)
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 16".
 
