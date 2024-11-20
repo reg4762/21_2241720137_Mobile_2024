@@ -478,3 +478,74 @@ Perbedaan kode langkah 1 dan 4:
 Langkah 1 (FutureGroup): Menggunakan FutureGroup untuk menambahkan beberapa futures dan menunggu semua futures selesai secara paralel. Setelah semuanya selesai, hasilnya digabungkan dan diproses.
 
 Langkah 4 (Future.wait): Menggunakan Future.wait untuk menunggu beberapa futures selesai secara paralel dan mengembalikan hasilnya dalam bentuk list. Lebih sederhana dan umum digunakan daripada FutureGroup.
+
+# Praktikum 6: Menggunakan Future dengan StatefulWidget
+
+## Langkah 1: install plugin geolocator
+
+Output:
+
+![Output](./img/6.1.png)
+
+## Langkah 2: Tambah permission GPS
+ 
+Output:
+
+![Output](./img/6.2.png)
+
+## Langkah 3: Buat file geolocation.dart
+ 
+Output:
+
+![Output](./img/6.3.png)
+
+## Langkah 4: Buat StatefulWidget
+Tambahkan file baru ini di folder lib project Anda.
+
+## Langkah 5: Isi kode geolocation.dart
+
+```
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+
+class LocationScreen extends StatefulWidget {
+  const LocationScreen({super.key});
+
+  @override
+  State<LocationScreen> createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
+  String myPosition = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getPosition().then((Position myPos) {
+      myPosition =
+          'Latitude: ${myPos.latitude.toString()} - Longitude:{myPos.longitude. toString()}';
+      setState(() {
+        myPosition = myPosition;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Current Location')),
+      body: Center(child: Text(myPosition)),
+    );
+  }
+
+  Future<Position> getPosition() async {
+    await Geolocator.requestPermission();
+    await Geolocator.isLocationServiceEnabled();
+    Position? position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+}
+```
+
+**Soal 11**
+- Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda.
