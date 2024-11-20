@@ -594,3 +594,68 @@ Tidak, tidak bisa mendapatkan koordinat GPS ketika menjalankan aplikasi Flutter 
 Output:
 
 ![Output](./img/6.gif)
+
+# Praktikum 7: Manajemen Future dengan FutureBuilder
+
+## Langkah 1: Modifikasi method getPosition()
+```
+  Future<Position> getPosition() async {
+    await Geolocator.requestPermission();
+    await Future.delayed(const Duration(seconds: 3));
+    // await Geolocator.isLocationServiceEnabled();
+    Position? position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+```
+
+## Langkah 2: Tambah variabel
+```
+class _LocationScreenState extends State<LocationScreen> {
+  String myPosition = '';
+  Future<Position>? position;
+```
+
+## Langkah 3: Tambah initState()
+```
+ void initState() {
+    super.initState();
+    position = getPosition();
+```
+
+## Langkah 4: Edit method build()
+```
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Current Location Regita')),
+        body: Center(
+          child: FutureBuilder(
+            future: position,
+            builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return Text(snapshot.data.toString());
+              } else {
+                return const Text('');
+              }
+            },
+          ),
+        ));
+  }
+```
+
+**Soal 13**
+- Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
+
+Jawaban: Iya
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 13".
+
+Output:
+
+![Output](./img/7.1.png)
+
+- Seperti yang Anda lihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
+
+## Langkah 5: Tambah handling error
