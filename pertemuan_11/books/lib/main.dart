@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +54,7 @@ class _FuturePageState extends State<FuturePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Back from the Future'),
+        title: const Text('Back from the Future Regita'),
       ),
       body: Center(
         child: Column(children: [
@@ -69,7 +70,14 @@ class _FuturePageState extends State<FuturePage> {
               //   result = 'An error occurred';
               //   setState(() {});
               // });
-              count();
+              // count();
+              getNumber().then((value) {
+                setState(() {
+                  result = value.toString();
+                });
+              }).catchError((e) {
+                result = 'An error occurred';
+              });
             },
           ),
           const Spacer(),
@@ -112,5 +120,28 @@ class _FuturePageState extends State<FuturePage> {
     setState(() {
       result = total.toString();
     });
+  }
+
+  late Completer completer;
+
+  Future getNumber() {
+    completer = Completer<int>();
+    calculate();
+    return completer.future;
+  }
+
+  // Future calculate() async {
+  //   await Future.delayed(const Duration(seconds: 5));
+  //   completer.complete(42);
+  // }
+
+  calculate() async {
+    try {
+      await new Future.delayed(const Duration(seconds: 5));
+      completer.complete(42);
+// throw Exception();
+    } catch (_) {
+      completer.completeError({});
+    }
   }
 }

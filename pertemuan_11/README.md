@@ -234,3 +234,93 @@ Langkah 2 memperkenalkan fungsi asynchronous count() yang menghitung total nilai
 Output:
 
 ![Output](./img/2.gif)
+
+# Praktikum 3: Menggunakan Completer di Future
+
+## Langkah 1: Buka main.dart
+
+~~~
+import 'package:async/async.dart';
+~~~
+
+## Langkah 2: Tambahkan variabel dan method
+
+~~~
+late Completer completer;
+
+Future getNumber() {
+  completer = Completer<int>();
+  calculate();
+  return completer.future;
+}
+
+Future calculate() async {
+  await Future.delayed(const Duration(seconds : 5));
+  completer.complete(42);
+}
+~~~
+
+## Langkah 3: Ganti isi kode onPressed()
+
+```
+getNumber().then((value) {
+    setState(() {
+        result = value.toString();
+    });
+});
+```
+
+## Langkah 4: Run
+
+**Soal 5**
+
+- Jelaskan maksud kode langkah 2 tersebut!
+
+Jawaban:
+
+Kode ini menggunakan Completer untuk menangani operasi asynchronous dan memberi hasil ke pihak yang menunggu setelah proses selesai. Fungsi getNumber() membuat objek Completer<int> dan memanggil fungsi calculate(), yang akan menunggu selama 5 detik (menggunakan Future.delayed) sebelum menyelesaikan tugasnya dengan mengisi Completer dengan nilai 42 melalui completer.complete(42). Fungsi getNumber() kemudian mengembalikan completer.future, yang akan menyelesaikan dengan nilai yang diberikan oleh completer.complete(). Ini memungkinkan kode untuk menangani hasil asynchronous dengan cara yang lebih terkontrol, memberikan nilai setelah delay dan memungkinkan pihak lain untuk menunggu hasilnya.
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 5".
+
+Output:
+
+![Output](./img/3.gif)
+
+## Langkah 5: Ganti method calculate()
+
+```
+  calculate() async {
+    try {
+      await new Future.delayed(const Duration(seconds: 5));
+      completer.complete(42);
+// throw Exception();
+    } catch (_) {
+      completer.completeError({});
+    }
+  }
+```
+## Langkah 6: Pindah ke onPressed()
+
+```
+getNumber().then((value) {
+  setState(() {
+    result = value.toString();
+  });
+}).catchError((e) {
+  result = 'An error occurred';
+});
+```
+
+**Soal 6**
+- Jelaskan maksud perbedaan kode langkah 2 dengan langkah 5-6 tersebut!
+
+Jawaban:
+
+Pada Langkah 2, kode berfokus pada penanganan operasi asynchronous yang sederhana menggunakan Completer. Fungsi getNumber() membuat objek Completer<int>, kemudian memanggil calculate(). Fungsi calculate() menunggu selama 5 detik (menggunakan Future.delayed), lalu menyelesaikan operasi dengan completer.complete(42), yang memberi nilai 42 kepada objek Completer tersebut. Hasilnya bisa diakses melalui completer.future, yang mengembalikan hasil setelah penundaan. Jika tidak ada kesalahan, hasil ini diselesaikan dengan nilai yang ditentukan.
+
+Pada Langkah 5, kode ditambahkan dengan penanganan kesalahan menggunakan blok try-catch. Jika terjadi kesalahan dalam calculate() (meskipun saat ini hanya ada throw Exception() yang dikomentari), maka completer.completeError() akan dipanggil untuk menyelesaikan operasi dengan error. Hal ini memungkinkan untuk menangani error secara eksplisit, dan ketika terjadi kesalahan, alih-alih mendapatkan hasil nilai, kita akan mendapatkan error yang bisa ditangani oleh catchError. Pada Langkah 6, pemanggilan getNumber() dipindahkan ke dalam fungsi onPressed(), dengan then untuk menangani hasil sukses (nilai yang diterima dari completer.future) dan catchError untuk menangani kasus kesalahan. Dalam hal ini, nilai atau kesalahan akan memperbarui UI menggunakan setState() sesuai dengan kondisi yang terjadi (sukses atau error).
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 6".
+
+Output:
+
+![Output](./img/3_2.gif)
