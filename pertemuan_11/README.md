@@ -444,3 +444,37 @@ Output:
 Output:
 
 ![Output](./img/5.gif)
+
+## Langkah 4: Tambah method handleError()
+
+```
+  Future handleError() async {
+    try {
+      await returnError();
+    } catch (error) {
+      setState(() {
+        result = error.toString();
+      });
+    } finally {
+      print('Complete');
+    }
+  }
+```
+
+**Soal 10**
+- Panggil method handleError() tersebut di ElevatedButton, lalu run. Apa hasilnya? Jelaskan perbedaan kode langkah 1 dan 4!
+
+```
+onPressed: () {
+    handleError();
+},
+```
+Output:
+
+![Output](./img/5_2.gif)
+
+Perbedaan kode langkah 1 dan 4:
+
+Langkah 1 (FutureGroup): Menggunakan FutureGroup untuk menambahkan beberapa futures dan menunggu semua futures selesai secara paralel. Setelah semuanya selesai, hasilnya digabungkan dan diproses.
+
+Langkah 4 (Future.wait): Menggunakan Future.wait untuk menunggu beberapa futures selesai secara paralel dan mengembalikan hasilnya dalam bentuk list. Lebih sederhana dan umum digunakan daripada FutureGroup.
