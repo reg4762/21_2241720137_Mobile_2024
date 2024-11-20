@@ -400,4 +400,47 @@ Pada kode ini, objek FutureGroup<int> digunakan untuk mengelompokkan beberapa op
 Kode 4 - Menggunakan Future.wait
 Pada kode ini, Future.wait() digunakan untuk menjalankan beberapa Future secara paralel dan menunggu semuanya selesai sebelum melanjutkan. Fungsi Future.wait() menerima sebuah list yang berisi beberapa Future (dalam hal ini hasil dari returnOneAsync(), returnTwoAsync(), dan returnThreeAsync()) dan mengembalikan sebuah Future<List<int>> yang berisi hasil dari semua operasi tersebut dalam urutan yang sama. Tidak ada kebutuhan untuk menambahkan Future satu per satu seperti di kode pertama, dan setelah semua operasi selesai, hasilnya langsung tersedia sebagai list yang bisa langsung diproses.
 
+# Praktikum 5: Menangani Respon Error pada Async Code
 
+## Langkah 1: Buka file main.dart
+
+```
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+```
+
+## Langkah 2: ElevatedButton
+
+```
+returnError()
+    .then((value) {
+        setState(() {
+            result = 'Success';
+        });
+    }).catchError((onError) {
+        setState(() {
+            result = onError.toString();
+        });
+    }).whenComplete(() => print('Complete'));
+```
+
+## Langkah 3: Run
+
+Output:
+
+![Output](./img/5.2.png)
+
+Pada bagian debug console akan melihat teks Complete seperti berikut.
+
+Output:
+
+![Output](./img/5.3.png)
+
+**Soal 9**
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 9".
+
+Output:
+
+![Output](./img/5.gif)

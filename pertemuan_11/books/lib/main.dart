@@ -78,7 +78,16 @@ class _FuturePageState extends State<FuturePage> {
               // }).catchError((e) {
               //   result = 'An error occurred';
               // });
-              returnFG();
+              // returnFG();
+              returnError().then((value) {
+                setState(() {
+                  result = 'Success';
+                });
+              }).catchError((onError) {
+                setState(() {
+                  result = onError.toString();
+                });
+              }).whenComplete(() => print('Complete'));
             },
           ),
           const Spacer(),
@@ -161,5 +170,10 @@ class _FuturePageState extends State<FuturePage> {
         result = total.toString();
       });
     });
+  }
+
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
   }
 }
