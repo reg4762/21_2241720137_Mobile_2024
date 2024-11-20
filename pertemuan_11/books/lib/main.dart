@@ -60,23 +60,31 @@ class _FuturePageState extends State<FuturePage> {
           const Spacer(),
           ElevatedButton(
             child: const Text('GO!'),
-            onPressed: () {},
-            ),
-            const Spacer(),
-            Text(result),
-            const Spacer(),
-            const CircularProgressIndicator(),
-            const Spacer(),
+            onPressed: () {
+              setState(() {});
+              getData().then((value) {
+                result = value.body.toString().substring(0, 450);
+                setState(() {});
+              }).catchError((_) {
+                result = 'An error occurred';
+                setState(() {});
+              });
+            },
+          ),
+          const Spacer(),
+          Text(result),
+          const Spacer(),
+          const CircularProgressIndicator(),
+          const Spacer(),
         ]),
       ),
     );
   }
-  
+
   Future<Response> getData() async {
-    const authority = 'www.gooleapis.com';
+    const authority = 'www.googleapis.com';
     const path = '/books/v1/volumes/e-ZDDwAAQBAJ';
     Uri url = Uri.https(authority, path);
-    return http.get(url); 
+    return http.get(url);
   }
 }
-

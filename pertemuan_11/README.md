@@ -1,8 +1,13 @@
-### Nama    : Regita Delya Putri
-### Absen   : 21
-### NIM     : 2241720137
-### Kelas   : TI 3F
+### Nama : Regita Delya Putri
+
+### Absen : 21
+
+### NIM : 2241720137
+
+### Kelas : TI 3F
+
 ### Pertemuan: 11 (Pemrograman Asynchronous)
+
 ---
 
 # Praktikum 1: Mengunduh Data dari Web Service (API)
@@ -20,11 +25,12 @@ Output:
 ![Output](./img/1.2.png)
 
 ## Langkah 3: Buka file main.dart
-**Soal 1** 
+
+**Soal 1**
 
 Tambahkan nama panggilan Anda pada title app sebagai identitas hasil pekerjaan Anda.
 
-~~~
+```
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -99,35 +105,61 @@ class _FuturePageState extends State<FuturePage> {
     );
   }
 }
-~~~
+```
 
 ## Langkah 4: Tambah method getData()
 
-~~~
+```
   Future<Response> getData() async {
     const authority = 'www.gooleapis.com';
     const path = '/books/v1/volumes/junbDwAAQBAJ';
     Uri url = Uri.https(authority, path);
-    return http.get(url); 
+    return http.get(url);
   }
-~~~
+```
 
 **Soal 2**
 
-Carilah judul buku favorit Anda di Google Books, lalu ganti ID buku pada variabel path di kode tersebut. (Laut Bercerita)
+- Carilah judul buku favorit Anda di Google Books, lalu ganti ID buku pada variabel path di kode tersebut. (Laut Bercerita)
 
 Output:
 
 ![Output](./img/1.3.png)
 
-Kemudian cobalah akses di browser URI tersebut dengan lengkap seperti ini. Jika menampilkan data JSON, maka Anda telah berhasil. Lakukan capture milik Anda dan tulis di README pada laporan praktikum. Lalu lakukan commit dengan pesan "W11: Soal 2".`
+- Kemudian cobalah akses di browser URI tersebut dengan lengkap seperti ini. Jika menampilkan data JSON, maka Anda telah berhasil. Lakukan capture milik Anda dan tulis di README pada laporan praktikum. Lalu lakukan commit dengan pesan "W11: Soal 2".`
 
 Output:
 
 ![Output](./img/1.4.png)
 
+## Langkah 5: Tambah kode di ElevatedButton
 
+```
+ElevatedButton(
+    child: const Text('GO!'),
+    onPressed: () {
+        setState(() {});
+        getData().then((value) {
+            result = value.body.toString().substring(0, 450);
+            setState(() {});
+            }).catchError((_) {
+            result = 'An error occurred';
+            setState(() {});
+            });
+        },
+),
+```
 
+**Soal 3**
 
+- Jelaskan maksud kode langkah 5 tersebut terkait substring dan catchError!
 
+Jawaban:
 
+Kode tersebut menggunakan `substring` untuk membatasi jumlah karakter dari respons API (`value.body`) hingga 450 karakter pertama agar tidak menampilkan teks terlalu panjang, namun ini berisiko memicu error jika panjang teks kurang dari 450, sehingga memerlukan pengecekan panjang terlebih dahulu. Selain itu, `catchError` digunakan untuk menangani error yang terjadi selama proses pengambilan data, seperti masalah jaringan atau kesalahan respons API, dengan mengubah nilai `result` menjadi pesan error (`'An error occurred'`) agar aplikasi tetap berjalan dan memberi tahu pengguna tentang kegagalan tersebut.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README. Lalu lakukan commit dengan pesan "W11: Soal 3".
+
+Output:
+
+![Output](./img/1.gif)
