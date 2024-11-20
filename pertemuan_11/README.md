@@ -676,4 +676,56 @@ Jawaban:
 
 Langkah terbaru menambahkan fitur untuk menangani error dan memberi tahu pengguna jika sesuatu salah terjadi (misalnya, kesalahan saat mengambil lokasi). Tanpa penanganan error, aplikasi hanya akan menunggu atau menampilkan hasil kosong jika terjadi error. Dengan penanganan error, aplikasi memberikan feedback yang jelas kepada pengguna tentang masalah yang terjadi.
 
+# Praktikum 8: Navigation route dengan Future Function
+
+## Langkah 1: Buat file baru navigation_first.dart
+
+Output:
+
+![Output](./img/8.1.png)
+
+## Langkah 2: Isi kode navigation_first.dart
+```
+import 'package:flutter/material.dart';
+
+class NavigationFirst extends StatefulWidget {
+  const NavigationFirst({super.key});
+
+  @override
+  State<NavigationFirst> createState() => _NavigationFirstState();
+}
+
+class _NavigationFirstState extends State<NavigationFirst> {
+  Color color = const Color.fromARGB(255, 233, 102, 102);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: color,
+      appBar: AppBar(
+        title: const Text('Navigation First Screen Regita'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Change Color'),
+          onPressed: () {
+            _navigateAndGetColor(context);
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+**Soal 15**
+- Tambahkan nama panggilan Anda pada tiap properti title sebagai identitas pekerjaan Anda.
+- Silakan ganti dengan warna tema favorit Anda.
+
+## Langkah 3: Tambah method di class _NavigationFirstState
+## Langkah 4: Buat file baru navigation_second.dart
+## Langkah 5: Buat class NavigationSecond dengan StatefulWidget
+## Langkah 6: Edit main.dart
+## Langkah 8: Run
+## 
 
