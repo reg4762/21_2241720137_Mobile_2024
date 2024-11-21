@@ -136,8 +136,41 @@ class ColorStream {
 - Lakukan commit hasil jawaban Soal 2 dengan pesan "W12: Jawaban Soal 2"
 
 ## Langkah 5: Tambah method getColors()
+
+```
+Stream<Color> getColors() async* {
+    
+}
+```
+
 ## Langkah 6: Tambah perintah yield*
+
+```
+  Stream<Color> getColors() async* {
+    yield* Stream.periodic(const Duration(seconds: 1), (int t) {
+      int index = t % colors.length;
+      return colors[index];
+    });
+  }
+```
+
+**Soal 3**
+- Jelaskan fungsi keyword yield* pada kode tersebut!
+
+Jawaban:
+
+Meneruskan seluruh elemen dari stream yang dihasilkan Stream.periodic ke dalam stream getColors.
+
+- Apa maksud isi perintah kode tersebut?
+
+Jawaban: 
+
+Menghasilkan stream warna-warna dalam urutan siklik dari array colors setiap detik.
+
+- Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"
+
 ## Langkah 7: Buka main.dart
+
 ## Langkah 8: Tambah variabel
 ## Langkah 9: Tambah method changeColor()
 ## Langkah 10: Lakukan override initState()
