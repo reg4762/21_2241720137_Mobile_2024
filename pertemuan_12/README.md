@@ -12,11 +12,13 @@
 
 # Praktikum 1: Dart Streams
 
+## Langkah 1: Buat Project Baru
+
 Output:
 
 ![Output](./img/1.1.png)
 
-## Langkah 1: Buat Project Baru
+## Langkah 2: Buka file main.dart
 
 ```
 import 'package:flutter/material.dart';
@@ -91,9 +93,48 @@ Widget build(BuildContext context) {
 
 - Lakukan commit hasil jawaban Soal 1 dengan pesan "W12: Jawaban Soal 1"
 
-## Langkah 2: Buka file main.dart
 ## Langkah 3: Buat file baru stream.dart
+
+Output:
+
+![Output](./img/1.3.png)
+
 ## Langkah 4: Tambah variabel colors
+
+```
+class ColorStream {
+  final List<Color> colors = [
+    Colors.blueGrey,
+    Colors.amber,
+    Colors.deepPurple,
+    Colors.lightBlue,
+    Colors.teal
+  ];
+}
+```
+
+**Soal 2**
+- Tambahkan 5 warna lainnya sesuai keinginan Anda pada variabel colors tersebut.
+
+```
+class ColorStream {
+  final List<Color> colors = [
+    Colors.blueGrey,
+    Colors.amber,
+    Colors.deepPurple,
+    Colors.lightBlue,
+    Colors.teal,
+    Colors.indigo,
+    Colors.redAccent,
+    Colors.greenAccent,
+    Colors.pink,
+    Colors.lime
+  ];
+}
+```
+
+- Lakukan commit hasil jawaban Soal 2 dengan pesan "W12: Jawaban Soal 2"
+
 ## Langkah 5: Tambah method getColors()
 ## Langkah 6: Tambah perintah yield*
 ## Langkah 7: Buka main.dart
