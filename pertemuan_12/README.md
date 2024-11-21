@@ -155,26 +155,82 @@ Stream<Color> getColors() async* {
 ```
 
 **Soal 3**
-- Jelaskan fungsi keyword yield* pada kode tersebut!
+- `Jelaskan fungsi keyword yield* pada kode tersebut!`
 
 Jawaban:
 
 Meneruskan seluruh elemen dari stream yang dihasilkan Stream.periodic ke dalam stream getColors.
 
-- Apa maksud isi perintah kode tersebut?
+- `Apa maksud isi perintah kode tersebut?`
 
 Jawaban: 
 
 Menghasilkan stream warna-warna dalam urutan siklik dari array colors setiap detik.
 
-- Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"
+- `Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"`
 
 ## Langkah 7: Buka main.dart
 
+Output:
+
+![Output](./img/1.4.png)
+
 ## Langkah 8: Tambah variabel
+
+```
+class _StreamHomePageState extends State<StreamHomePage> {
+  Color bgColor = Colors.blueGrey;
+  late ColorStream colorStream;
+```
+
 ## Langkah 9: Tambah method changeColor()
+
+```
+  void changeColor() async {
+    await for (var eventColor in colorStream.getColors()) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    }
+  }
+```
+
 ## Langkah 10: Lakukan override initState()
+
+```
+  @override
+  void initState() {
+    super.initState();
+    colorStream = ColorStream();
+    changeColor();
+  }
+```
+
 ## Langkah 11: Ubah isi Scaffold()
+
+```
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream Regita'),
+      ),
+      body: Container(
+        decoration: BoxDecoration(color: bgColor),
+      ),
+    );
+  }
+```
+
 ## Langkah 12: Run
+
+**Soal 4**
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+Output:
+
+![Output](./img/1v.gif)
+
+- Lakukan commit hasil jawaban Soal 4 dengan pesan "W12: Jawaban Soal 4"
+
 ## Langkah 13: Ganti isi method changeColor()
 
