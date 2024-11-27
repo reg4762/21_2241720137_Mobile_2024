@@ -559,6 +559,8 @@ Output:
 
 - Jelaskan maksud kode langkah 1-3 tersebut!
 
+`Jawaban:`
+
 Pada langkah 1, variabel transformer dideklarasikan sebagai StreamTransformer untuk memodifikasi data atau error dalam stream sebelum diteruskan ke listener.
 
 Pada langkah 2, transformer diinisialisasi menggunakan StreamTransformer.fromHandlers untuk menangani data, error, dan status selesai. Data dalam stream diubah menjadi sepuluh kali lipat, error menghasilkan nilai -1, dan stream ditutup saat selesai.
