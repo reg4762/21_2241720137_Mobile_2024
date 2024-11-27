@@ -571,3 +571,150 @@ Pada langkah 3, stream yang berasal dari numberStreamController dihubungkan deng
 
 - Lalu lakukan commit dengan pesan "W12: Jawaban Soal 8".
 
+# Praktikum 4: Subscribe ke stream events
+
+## Langkah 1: Tambah variabel
+Tambahkan variabel berikut di class _StreamHomePageState
+
+```
+  late StreamSubscription subscription;
+```
+
+## Langkah 2: Edit initState()
+Edit kode seperti berikut ini.
+
+```
+  @override
+  void initState() {
+    numberStream = NumberStream();
+    numberStreamController = numberStream.controller;
+    Stream stream = numberStreamController.stream;
+
+    subscription = stream.listen((event) {
+      setState(() {
+        lastNumber = event;
+      });
+    });
+    super.initState();
+  }
+
+```
+
+## Langkah 3: Tetap di initState()
+Tambahkan kode berikut ini.
+
+```
+    subscription.onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+```
+
+## Langkah 4: Tambah properti onDone()
+Tambahkan dibawahnya kode ini setelah onError
+
+```
+subscription.onDone(() {
+  print('OnDone was called');
+});
+```
+
+## Langkah 5: Tambah method baru
+Ketik method ini di dalam class _StreamHomePageState
+
+```
+void stopStream() {
+  numberStreamController.close();
+}
+```
+
+## Langkah 6: Pindah ke method dispose()
+Jika method dispose() belum ada, Anda dapat mengetiknya dan dibuat override. Ketik kode ini didalamnya.
+
+```
+  @override
+  void dispose() {
+    numberStreamController.close();
+    super.dispose();
+    subscription.cancel();
+  }
+```
+
+## Langkah 7: Pindah ke method build()
+Tambahkan button kedua dengan isi kode seperti berikut ini.
+
+```
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream Regita'),
+      ),
+      body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(lastNumber.toString()),
+              ElevatedButton(
+                onPressed: () => addRandomNumber(),
+                child: Text('New Random Number'),
+              ),
+              ElevatedButton(
+                onPressed: () => stopStream(),
+                child: const Text('Stop Subscription'),
+              )
+            ],
+          )),
+    );
+  }
+```
+
+## Langkah 8: Edit method addRandomNumber()
+Edit kode seperti berikut ini.
+
+```
+  void addRandomNumber() {
+    Random random = Random();
+    int myNum = random.nextInt(10);
+    if (!numberStreamController.isClosed) {
+      numberStream.addNumberToSink(myNum);
+    } else {
+      setState(() {
+        lastNumber = -1;
+      });
+    }
+  }
+```
+
+## Langkah 9: Run
+Anda akan melihat dua button seperti gambar berikut.
+
+Output:
+
+![Output](./img/4v.gif)
+
+## Langkah 10: Tekan button ‘Stop Subscription'
+Anda akan melihat pesan di Debug Console seperti berikut.
+
+Output:
+
+![Output](./img/4.1.png)
+
+**Soal 9**
+
+- Jelaskan maksud kode langkah 2, 6 dan 8 tersebut!
+
+`Jawaban:`
+
+Langkah 2: Di initState, stream didaftarkan ke subscription menggunakan stream.listen. Listener ini akan memperbarui state dengan nilai baru dari stream (lastNumber) setiap kali data diterima. Dengan menyimpan subscription, kita dapat mengelola langganan ini (seperti membatalkan saat tidak diperlukan).
+
+Langkah 6: Di dispose, numberStreamController.close() menutup stream untuk mencegah kebocoran memori, dan subscription.cancel() membatalkan langganan stream sehingga aplikasi tidak memproses data setelah widget dihapus.
+
+Langkah 8: addRandomNumber menghasilkan angka acak dan menambahkannya ke sink stream jika stream belum ditutup (!numberStreamController.isClosed). Jika stream sudah ditutup, state diperbarui dengan nilai -1, yang dapat digunakan untuk menunjukkan error atau kondisi khusus.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+- Lalu lakukan commit dengan pesan "W12: Jawaban Soal 9".
