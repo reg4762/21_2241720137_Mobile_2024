@@ -464,6 +464,8 @@ Pada langkah 15, metode addRandomNumber diubah untuk tidak lagi mengirim angka a
 
 - Kembalikan kode seperti semula pada Langkah 15, comment addError() agar Anda dapat melanjutkan ke praktikum 3 berikutnya.
 
+`Jawaban:`
+
 ```
   void addRandomNumber() {
     Random random = Random();
@@ -474,3 +476,96 @@ Pada langkah 15, metode addRandomNumber diubah untuk tidak lagi mengirim angka a
 ```
 
 - Lalu lakukan commit dengan pesan "W12: Jawaban Soal 7".
+
+# Praktikum 3: Injeksi data ke streams
+
+## Langkah 1: Buka main.dart
+Tambahkan variabel baru di dalam class _StreamHomePageState
+
+```
+  late StreamTransformer transformer;
+```
+
+## Langkah 2: Tambahkan kode ini di initState
+
+```
+  @override
+  void initState() {
+    numberStream = NumberStream();
+    numberStreamController = numberStream.controller;
+    Stream stream = numberStreamController.stream;
+
+    stream.listen((event) {
+      setState(() {
+        lastNumber = event;
+      });
+    }).onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+
+    transformer = StreamTransformer<int, int>.fromHandlers(
+        handleData: (value, sink) {
+          sink.add(value * 10);
+        },
+        handleError: (error, trace, sink) {
+          sink.add(-1);
+        },
+        handleDone: (sink) => sink.close());
+  }
+```
+
+## Langkah 3: Tetap di initState
+Lakukan edit seperti kode berikut.
+
+```
+void initState() {
+    transformer = StreamTransformer<int, int>.fromHandlers(
+        handleData: (value, sink) {
+          sink.add(value * 10);
+        },
+        handleError: (error, trace, sink) {
+          sink.add(-1);
+        },
+        handleDone: (sink) => sink.close()
+      );
+
+    numberStream = NumberStream();
+    numberStreamController = numberStream.controller;
+    Stream stream = numberStreamController.stream;
+
+    stream.transform(transformer).listen((event) {
+      setState(() {
+        lastNumber = event;
+      });
+    }).onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+    super.initState();
+  }
+```
+
+## Langkah 4: Run
+Terakhir, run atau tekan F5 untuk melihat hasilnya jika memang belum running. Bisa juga lakukan hot restart jika aplikasi sudah running. Maka hasilnya akan seperti gambar berikut ini. Anda akan melihat tampilan angka dari 0 hingga 90.
+
+Output:
+
+![Output](./img/3.gif)
+
+**Soal 8**
+
+- Jelaskan maksud kode langkah 1-3 tersebut!
+
+Pada langkah 1, variabel transformer dideklarasikan sebagai StreamTransformer untuk memodifikasi data atau error dalam stream sebelum diteruskan ke listener.
+
+Pada langkah 2, transformer diinisialisasi menggunakan StreamTransformer.fromHandlers untuk menangani data, error, dan status selesai. Data dalam stream diubah menjadi sepuluh kali lipat, error menghasilkan nilai -1, dan stream ditutup saat selesai.
+
+Pada langkah 3, stream yang berasal dari numberStreamController dihubungkan dengan transformer melalui metode stream.transform(transformer). Stream yang telah dimodifikasi ini kemudian didengarkan oleh listener, memungkinkan UI menampilkan data yang telah dimodifikasi atau menangani error sesuai definisi di transformer.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+- Lalu lakukan commit dengan pesan "W12: Jawaban Soal 8".
+
