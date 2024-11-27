@@ -33,7 +33,6 @@ class _StreamHomePageState extends State<StreamHomePage> {
   late ColorStream colorStream;
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -53,10 +52,15 @@ class _StreamHomePageState extends State<StreamHomePage> {
   }
 
   void changeColor() async {
-    await for (var eventColor in colorStream.getColors()) {
+    // await for (var eventColor in colorStream.getColors()) {
+    //   setState(() {
+    //     bgColor = eventColor;
+    //   });
+    // }
+    colorStream.getColors().listen((eventColor) {
       setState(() {
         bgColor = eventColor;
       });
-    }
+    });
   }
 }

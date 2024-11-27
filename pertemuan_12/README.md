@@ -155,19 +155,19 @@ Stream<Color> getColors() async* {
 ```
 
 **Soal 3**
-- `Jelaskan fungsi keyword yield* pada kode tersebut!`
+- Jelaskan fungsi keyword yield* pada kode tersebut!
 
 Jawaban:
 
 Meneruskan seluruh elemen dari stream yang dihasilkan Stream.periodic ke dalam stream getColors.
 
-- `Apa maksud isi perintah kode tersebut?`
+- Apa maksud isi perintah kode tersebut?
 
 Jawaban: 
 
 Menghasilkan stream warna-warna dalam urutan siklik dari array colors setiap detik.
 
-- `Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"`
+- Lakukan commit hasil jawaban Soal 3 dengan pesan "W12: Jawaban Soal 3"
 
 ## Langkah 7: Buka main.dart
 
@@ -234,3 +234,24 @@ Output:
 
 ## Langkah 13: Ganti isi method changeColor()
 
+```
+  void changeColor() async {
+    colorStream.getColors().listen((eventColor) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    });
+  }
+```
+
+**Soal 5**
+
+- Jelaskan perbedaan menggunakan listen dan await for (langkah 9) !
+
+`jawaban:`
+
+Perbedaan antara listen dan await for terletak pada cara mereka mengonsumsi dan menangani stream dalam Dart. listen digunakan untuk berlangganan ke stream dan menangani setiap data yang diterima melalui callback. Dengan listen, kita dapat menangani berbagai event seperti data yang diterima, error yang terjadi, dan akhir dari stream menggunakan parameter onData, onError, dan onDone. Ini memberikan kontrol yang lebih besar terhadap aliran data dan memungkinkan pengelolaan lebih lanjut, tetapi memerlukan penanganan manual untuk setiap event yang mungkin terjadi.
+
+Di sisi lain, await for digunakan dalam loop asinkron untuk secara langsung menunggu dan memproses setiap elemen yang dihasilkan oleh stream. Ini lebih sederhana dan lebih mudah dibaca, karena kita hanya perlu menunggu data yang diterima dan memprosesnya, tanpa perlu menangani callback secara eksplisit. Namun, await for lebih terbatas karena tidak dapat menangani error atau status lainnya seperti penutupan stream. Jika hanya membutuhkan pengolahan data secara berurutan tanpa perlu penanganan error atau status stream, await for adalah pilihan yang lebih ringkas.
+
+- Lakukan commit hasil jawaban Soal 5 dengan pesan "W12: Jawaban Soal 5"
