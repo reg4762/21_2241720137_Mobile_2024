@@ -409,8 +409,68 @@ Pada langkah 10, metode addRandomNumber digunakan untuk menghasilkan angka acak 
 - Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
 
 - Lalu lakukan commit dengan pesan "W12: Jawaban Soal 6".
+
 ## Langkah 13: Buka stream.dart
+Tambahkan method berikut ini.
+
+```
+  addError() {
+    controller.sink.addError('error');
+  }
+```
 
 ## Langkah 14: Buka main.dart
+Tambahkan method onError di dalam class StreamHomePageState pada method listen di fungsi initState() seperti berikut ini.
+
+```
+    stream.listen((event) {
+      setState(() {
+        lastNumber = event;
+      });
+    }).onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+```
 
 ## Langkah 15: Edit method addRandomNumber()
+Lakukan comment pada dua baris kode berikut, lalu ketik kode seperti berikut ini.
+
+```
+  void addRandomNumber() {
+    Random random = Random();
+    // int myNum = random.nextInt(10);
+    // numberStream.addNumberToSink(myNum);
+    numberStream.addError();
+  }
+```
+
+Output:
+
+![Output](./img/2.1v.gif)
+
+**Soal 7**
+
+- Jelaskan maksud kode langkah 13 sampai 15 tersebut!
+
+`Jawaban:`
+
+Pada langkah 13, metode addError ditambahkan untuk mengirimkan error ke stream menggunakan controller.sink.addError. Ini memungkinkan simulasi terjadinya error dalam aliran data.
+
+Pada langkah 14, penanganan error ditambahkan ke stream listener di dalam initState menggunakan onError. Jika error terjadi, state diperbarui dengan mengatur nilai lastNumber menjadi -1, yang dapat digunakan sebagai indikator error pada UI.
+
+Pada langkah 15, metode addRandomNumber diubah untuk tidak lagi mengirim angka acak ke stream. Sebaliknya, metode ini memanggil addError, sehingga setiap kali tombol terkait diaktifkan, error akan dikirim ke stream untuk menguji bagaimana aplikasi menangani error tersebut.
+
+- Kembalikan kode seperti semula pada Langkah 15, comment addError() agar Anda dapat melanjutkan ke praktikum 3 berikutnya.
+
+```
+  void addRandomNumber() {
+    Random random = Random();
+    int myNum = random.nextInt(10);
+    numberStream.addNumberToSink(myNum);
+    // numberStream.addError();
+  }
+```
+
+- Lalu lakukan commit dengan pesan "W12: Jawaban Soal 7".
