@@ -971,3 +971,178 @@ Langkah 7 memanfaatkan StreamBuilder untuk mendengarkan data dari numberStream d
 - Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
 
 - Lalu lakukan commit dengan pesan "W12: Jawaban Soal 12".
+
+# Praktikum 7: BLoC Pattern
+
+## Langkah 1: Buat Project baru
+
+Output:
+
+![Output](./img/7.1.png)
+
+## Langkah 2: Isi kode random_bloc.dart 
+Ketik kode impor berikut ini.
+
+```
+import 'dart:async';
+import 'dart:math';
+```
+
+## Langkah 3: Buat class RandomNumberBloc()
+
+```
+class RandomNumberBloc {} 
+```
+
+## Langkah 4: Buat variabel StreamController
+Di dalam class RandomNumberBloc() ketik variabel berikut ini
+
+```
+  // StreamController for input events
+  final _generateRandomController = StreamController<void>();
+  // StreamController for output
+  final _randomNumberController = StreamController<int>();
+  // Input Sink
+  Sink<void> get generateRandom => _generateRandomController.sink;
+  // Output Stream.
+  Stream<int> get randomNumber => _randomNumberController.stream;
+  _secondsStreamController.sink;
+```
+
+## Langkah 5: Buat constructor
+
+```
+  RandomNumberBloc() {
+    _generateRandomController.stream.listen((_) {
+      final random = Random().nextInt(10);
+      _randomNumberController.sink.add(random);
+    });
+  }
+}
+```
+
+## Langkah 6: Buat method dispose()
+
+```
+  void dispose() {
+    _generateRandomController.close();
+    _randomNumberController.close();
+  }
+```
+
+## Langkah 7: Edit main.dart
+
+```
+@override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const RandomScreen(),
+    );
+  }
+```
+
+## Langkah 8: Buat file baru random_screen.dart
+Di dalam folder lib project Anda, buatlah file baru ini.
+
+Output:
+
+![Output](./img/7.2.png)
+
+## Langkah 9: Lakukan impor material dan random_bloc.dart
+Ketik kode ini di file baru random_screen.dart
+
+```
+import 'package:flutter/material.dart';
+import 'random_bloc.dart';
+```
+
+## Langkah 10: Buat StatefulWidget RandomScreen
+Buatlah di dalam file random_screen.dart
+
+```
+class RandomScreen extends StatefulWidget {
+  const RandomScreen({super.key});
+  
+  @override
+  State<RandomScreen> createState() => _RandomScreenState();
+}
+
+class _RandomScreenState extends State<RandomScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bloc Random Screen - Regita '),
+      ),
+      body: Container(),
+    );
+  }
+}
+```
+
+## Langkah 11: Buat variabel
+Ketik kode ini di dalam class _RandomScreenState
+
+```
+  final _bloc = RandomNumberBloc();
+```
+
+## Langkah 12: Buat method dispose()
+Ketik kode ini
+
+```
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+```
+
+## Langkah 13: Edit method build()
+Ketik kode ini
+
+```
+@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Random Number Regita')),
+      body: Center(
+        child: StreamBuilder<int>(
+          stream: _bloc.randomNumber,
+          initialData: 0,
+          builder: (context, snapshot) {
+            return Text(
+              'Random Number: ${snapshot.data}',
+              style: const TextStyle(fontSize: 24),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _bloc.generateRandom.add(null),
+        child: const Icon(Icons.refresh),
+      ),
+    );
+  }
+```
+
+Run aplikasi, maka Anda akan melihat angka acak antara angka 0 sampai 9 setiap kali menekan tombol FloactingActionButton.
+
+Output:
+
+![Output](./img/7v.gif)
+
+**Soal 13**
+- Jelaskan maksud praktikum ini ! Dimanakah letak konsep pola BLoC-nya ?
+
+`Jawaban:`
+
+Dalam aplikasi ini, angka acak dihasilkan melalui RandomNumberBloc, yang mengelola event dan output menggunakan StreamController. Ketika tombol ditekan, event dikirim ke BLoC melalui stream, yang kemudian memprosesnya dan mengirimkan angka acak melalui stream ke UI. UI, yang menggunakan StreamBuilder, hanya bertanggung jawab untuk menampilkan data yang diterima dari stream, sementara logika bisnis (menghasilkan angka acak) sepenuhnya dikelola oleh BLoC. Dengan demikian, pola BLoC memastikan pemisahan antara logika aplikasi dan tampilan, memungkinkan pengelolaan state yang lebih bersih dan efisien.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+- Lalu lakukan commit dengan pesan "W12: Jawaban Soal 13".
