@@ -821,3 +821,153 @@ Setelah stream diubah menjadi broadcast stream menggunakan asBroadcastStream(), 
 
 - Lalu lakukan commit dengan pesan "W12: Jawaban Soal 10,11".
 
+# Praktikum 6: StreamBuilder
+
+## Langkah 1: Buat Project Baru
+
+Output:
+
+![Output](./img/6.1.png)
+
+## Langkah 2: Buat file baru stream.dart
+Ketik kode ini
+
+```
+class NumberStream {}
+```
+
+## Langkah 3: Tetap di file stream.dart
+Ketik kode seperti berikut.
+
+```
+import 'dart:math';
+
+class NumberStream {
+  Stream<int> getNumbers() async* {
+    yield* Stream.periodic(const Duration(seconds: 1), (int t) {
+      Random random = Random();
+      int myNum = random.nextInt(10);
+      return myNum;
+    });
+  }
+}
+
+```
+
+## Langkah 4: Edit main.dart
+Ketik kode seperti berikut ini.
+
+```
+import 'package:flutter/material.dart';
+import 'stream.dart';
+import 'dart:async';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Stream',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: const StreamHomePage(),
+    );
+  }
+}
+
+class StreamHomePage extends StatefulWidget {
+  const StreamHomePage({super.key});
+
+  @override
+  State<StreamHomePage> createState() => _StreamHomePageState();
+}
+
+class _StreamHomePageState extends State<StreamHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream'),
+      ),
+      body: Container(),
+    );
+  }
+}
+```
+
+## Langkah 5: Tambah variabel
+Di dalam class _StreamHomePageState, ketika variabel ini.
+
+```
+late Stream<int> numberStream;
+```
+
+## Langkah 6: Edit initState()
+Ketik kode seperti berikut.
+
+```
+@override
+void initState() {
+  numberStream = NumberStream().getNumbers();
+  super.initState();
+}
+```
+
+## Langkah 7: Edit method build()
+
+```
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream Regita'),
+      ),
+      body: StreamBuilder(
+        stream: numberStream,
+        initialData: 0,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print('Error!');
+          }
+          if (snapshot.hasData) {
+            return Center(
+                child: Text(
+              snapshot.data.toString(),
+              style: const TextStyle(fontSize: 96),
+            ));
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
+      ),
+    );
+  }
+```
+
+## Langkah 8: Run
+Hasilnya, setiap detik akan tampil angka baru seperti berikut.
+
+Output:
+
+![Output](./img/6v.gif)
+
+**Soal 12**
+
+- Jelaskan maksud kode pada langkah 3 dan 7 !
+
+`Jawaban:`
+
+
+Langkah 3 bertujuan untuk membuat kelas NumberStream yang menghasilkan stream angka acak menggunakan metode getNumbers. Metode ini menggunakan Stream.periodic untuk menghasilkan angka secara berkala setiap 1 detik. Dalam setiap periode, angka acak antara 0 hingga 9 dihasilkan menggunakan Random dan diteruskan melalui stream. Fungsi ini memberikan data dinamis secara terus-menerus yang dapat digunakan dalam aplikasi.
+
+Langkah 7 memanfaatkan StreamBuilder untuk mendengarkan data dari numberStream dan memperbarui antarmuka pengguna secara otomatis saat data baru diterima. Jika stream menghasilkan data, angka acak tersebut ditampilkan di layar dengan teks berukuran besar. Selain itu, jika stream mengalami error, pesan error dapat ditangani.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+- Lalu lakukan commit dengan pesan "W12: Jawaban Soal 12".

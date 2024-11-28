@@ -73,22 +73,22 @@ class _StreamHomePageState extends State<StreamHomePage> {
     numberStreamController = numberStream.controller;
     Stream stream = numberStreamController.stream.asBroadcastStream();
 
-    subscription = stream.listen((event) {
-      setState(() {
-        lastNumber = event;
-      });
-    });
-    super.initState();
+    // subscription = stream.listen((event) {
+    //   setState(() {
+    //     lastNumber = event;
+    //   });
+    // });
+    // super.initState();
 
-    subscription.onError((error) {
-      setState(() {
-        lastNumber = -1;
-      });
-    });
+    // subscription.onError((error) {
+    //   setState(() {
+    //     lastNumber = -1;
+    //   });
+    // });
 
-    subscription.onDone(() {
-      print('OnDone was called');
-    });
+    // subscription.onDone(() {
+    //   print('OnDone was called');
+    // });
 
     subscription = stream.listen((event) {
       setState(() {
