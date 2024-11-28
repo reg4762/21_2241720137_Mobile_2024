@@ -718,3 +718,106 @@ Langkah 8: addRandomNumber menghasilkan angka acak dan menambahkannya ke sink st
 - Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
 
 - Lalu lakukan commit dengan pesan "W12: Jawaban Soal 9".
+
+# Praktikum 5: Multiple stream subscriptions
+
+## Langkah 1: Buka file main.dart
+Ketik variabel berikut di class _StreamHomePageState
+
+```
+  late StreamSubscription subscription2;
+  String values = '';
+```
+
+## Langkah 2: Edit initState()
+Ketik kode seperti berikut.
+
+```
+    subscription = stream.listen((event) {
+      setState(() {
+        values += '$event - ';
+      });
+    });
+
+    subscription2 = stream.listen((event) {
+      setState(() {
+        values += '$event - ';
+      });
+    });
+```
+
+## Langkah 3: Run
+Lakukan run maka akan tampil error seperti gambar berikut.
+
+Output:
+
+![Output](./img/5.1.png)
+
+**Soal 10**
+- Jelaskan mengapa error itu bisa terjadi ?
+
+`Jawaban:`
+
+Error terjadi karena stream default hanya dapat dilisten satu kali. Kode mencoba mendengarkan stream yang sama beberapa kali menggunakan stream.listen, sehingga memicu error "Bad state: Stream has already been listened to".
+
+## Langkah 4: Set broadcast stream
+Ketik kode seperti berikut di method initState()
+
+```
+  void initState() {
+    numberStream = NumberStream();
+    numberStreamController = numberStream.controller;
+    Stream stream = numberStreamController.stream.asBroadcastStream();
+```
+
+## Langkah 5: Edit method build()
+Tambahkan text seperti berikut
+
+```
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stream Regita'),
+      ),
+      body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(values),
+              ElevatedButton(
+                onPressed: () => addRandomNumber(),
+                child: Text('New Random Number'),
+              ),
+              ElevatedButton(
+                onPressed: () => stopStream(),
+                child: const Text('Stop Subscription'),
+              )
+            ],
+          )),
+    );
+  }
+```
+
+## Langkah 6: Run
+Tekan button `New Random Number` beberapa kali, maka akan tampil teks angka terus bertambah sebanyak dua kali.
+
+Output:
+
+![Output](./img/5v.gif)
+
+**Soal 11**
+
+- Jelaskan mengapa hal itu bisa terjadi ?
+
+`Jawaban:`
+
+Output teks angka bertambah dua kali setiap kali tombol ditekan karena ada dua listener (subscription dan subscription2) yang mendengarkan stream yang sama.
+
+Setelah stream diubah menjadi broadcast stream menggunakan asBroadcastStream(), stream dapat didengarkan oleh lebih dari satu listener. Setiap kali tombol ditekan, method addRandomNumber memicu pengiriman data baru ke stream, dan kedua listener menerima data tersebut. Masing-masing listener menambahkan nilai ke variabel values, sehingga teks angka muncul dua kali di output.
+
+- Capture hasil praktikum Anda berupa GIF dan lampirkan di README.
+
+- Lalu lakukan commit dengan pesan "W12: Jawaban Soal 10,11".
+
